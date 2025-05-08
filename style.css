@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+:root, button {
+    font-family: 'Poppins', sans-serif;
+}
+
+.card {
+    padding: 8px;
+    margin: 8px;
+    width: fit-content;
+    height: fit-content;
+    border: 5px solid papayawhip;
+    border-radius: 0.5rem; 
+    color: gray;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+form button {
+    align-self: center;
+}
+
+form div {
+    display: block;
+}
