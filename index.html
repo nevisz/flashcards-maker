@@ -9,6 +9,7 @@
         <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
         <script>
+            /* Define Flashcard class */
             class Flashcard {
                 static #id = 0;
                 constructor(answer,text) {
@@ -18,9 +19,64 @@
                     this.front = true; // helper variable determining whether to show the question or answer
                 }
             }
+
+            /* Define Vue App */
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        question: '',
+                        answer: '',
+                        flashcards_container: []
+                    }
+                },
+                methods: {
+                    /* createCard() {
+                        html = $('#flashcards_container').html();
+                        $('#flashcards_container').empty();
+                        $('#flashcards_container').html(`
+                            <form class='card' v-on:submit.prevent="addCard">
+                                <label for="">Question: </label> <input type="text" v-model="question">
+                                <label for="">Answer: </label> <input type="text" v-model="answer">
+                                <button>Add card</button>
+                            </form>
+                            `+ html
+                        );
+                    }, */
+                    addCard(answer,text) {
+                        var card = new Flashcard(answer,text);
+                        this.flashcards_container.push(card);
+                        this.question = '';
+                        this.answer = '';
+                    },
+                    flipCard(card) {
+                        card.front = !card.front;   
+                    }
+                }
+            });
+            app.mount('#app');
         </script>
     </head>
 
-    <body>
+    <body id="app">
+        <!-- <button v-on:click="createCard">+</button> -->
+
+        <form class='card' v-on:submit.prevent="addCard(question,answer)">
+            <div>
+                <label for="">Question:&nbsp;</label> <input type="text" required v-model="question">
+            </div>
+            <div>
+                <label for="">Answer:&nbsp;</label> <input type="text" required v-model="answer">
+            </div>
+            <button>Add card</button>
+        </form>
+
+        <section id="flashcards_container">
+            <div class="card" v-for="card in flashcards_container" v-on:click="flipCard(card)">
+                <p v-if="card.front">{{card.answer}}</p> 
+                <p v-if="!card.front">Answer: {{card.text}}</p>
+            </div>
+        </section>
+
+        <script> app.mount('#app'); </script>
     </body>
 </html>
